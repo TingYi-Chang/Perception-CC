@@ -58,8 +58,8 @@ public class NewBall : MonoBehaviour
             if (mycondition[0]==2)//打鐵
             {
                 rb.useGravity = true;
-                float ZShift = (float)(((Random.Range(0, 2) == 1)) ? Random.Range(0.03f, 0.05f) : Random.Range(-0.05f, -0.03f));
-                myVector = new Vector3(-0.6f + Random.Range( 0, 0.2f), 1.5f + Random.Range(-0.3f, 0.3f), ZShift);
+                float ZShift = (float)(((Random.Range(0, 2) == 1)) ? Random.Range(0.03f, 0.04f) : Random.Range(-0.04f, -0.03f));
+                myVector = new Vector3(-0.6f + Random.Range( -0.2f, 0.15f), 2.0f + Random.Range(-0.15f, 0.15f), ZShift);
                 m_Speed = 2600.0f;
                 //m_Speed += Random.Range(30, 50.0f);
                 myVector = Vector3.Normalize(myVector);
@@ -67,11 +67,11 @@ public class NewBall : MonoBehaviour
                 count = 1;
                 timer = 0;
             }
-            if (mycondition[0]==3)
+            if (mycondition[0]==3)//肉包
             {
                 rb.useGravity = true;
-                myVector = new Vector3(-0.6f, 1.5f, Random.Range(-0.2f, 0.2f));
-                m_Speed = 2200.0f;
+                myVector = new Vector3(-0.6f, 2.0f, Random.Range(-0.2f, 0.2f));
+                m_Speed = 2300.0f;
 
                 myVector = Vector3.Normalize(myVector);
                 rb.AddForce(myVector * m_Speed);

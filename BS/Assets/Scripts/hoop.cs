@@ -101,14 +101,15 @@ public class hoop : MonoBehaviour
 			{
 				triggerShake = produce_ball.condition[TrailCount][2];
 				triggerAudio = produce_ball.condition[TrailCount][3];
-				Debug.Log(triggerShake);
+				Debug.Log("Shake = " + triggerShake);
+				Debug.Log("Audio = " + triggerAudio);
 			}
 			else
 			{
 				triggerShake = produce_ball.condition[0][2];
 				triggerAudio = produce_ball.condition[0][3];
 			}
-			Restart();
+			//Restart();
 			
 		}
 
@@ -144,7 +145,7 @@ public class hoop : MonoBehaviour
 			{
 				Debug.DrawRay(contact.point, contact.normal, Color.white);
 			}
-			if (collision.relativeVelocity.magnitude > 2)
+			if (collision.relativeVelocity.magnitude > 1)
 				Hit.Play();
 		}
 			
