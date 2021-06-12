@@ -9,46 +9,64 @@ public class NewBall : MonoBehaviour
     public Renderer[] linerend;
     public int goal;
     public Vector3 myVector;
-    public float m_Speed = 1075.0f;
-    public int count = 0;
+    public float m_Speed = 2600.0f;
+    public int count = 0,round;
     float timer;
+    public List<int> mycondition;
     //Random rnd = new Random();
     //public Text text;
     //private int count;
     void Start()
     {
+        round = produce_ball.RoundCount;
+        if(round < produce_ball.condition.Count)
+        {
+            mycondition = produce_ball.condition[round];
+        }
+        else
+        {
+            mycondition = produce_ball.condition[0];
+        }
+        Debug.Log(mycondition[0]);
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         //count = 0;
         ballrend = GetComponent<Renderer>();
         ballrend.enabled = true;
         linerend = GetComponentsInChildren<Renderer>();
-        Debug.Log(linerend);
+        //Debug.Log(linerend);
     }
-    void FixedUpdate()
+    void Update()
     {
-        if(count == 0)//準備投球
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.W))//進球
+            Destroy(gameObject);
+            Debug.Log("destroy");
+        }
+        if (Input.GetKeyDown(KeyCode.A))//投球
+        {
+            if (mycondition[0]==1)//進球
             {
                 rb.useGravity = true;
-                myVector = new Vector3(-0.6f, 1.5f, 0);
+                myVector = new Vector3(-0.6f, 2.0f, Random.Range(-0.02f, 0.02f));
+                myVector = Vector3.Normalize(myVector);
+                m_Speed = 2600.0f;
+                rb.AddForce(myVector * m_Speed);
+                count = 1;
+                timer = 0;
+            }
+            if (mycondition[0]==2)//打鐵
+            {
+                rb.useGravity = true;
+                myVector = new Vector3(-0.6f + Random.Range( 0, 0.2f), 1.5f + Random.Range(-0.3f, 0.3f), Random.Range(-0.035f, 0.035f));
+                m_Speed = 2600.0f;
+                m_Speed += Random.Range(30, 50.0f);
                 myVector = Vector3.Normalize(myVector);
                 rb.AddForce(myVector * m_Speed);
                 count = 1;
                 timer = 0;
             }
-            if (Input.GetKeyDown(KeyCode.E))//打鐵
-            {
-                rb.useGravity = true;
-                myVector = new Vector3(-0.6f + Random.Range( 0, 0.2f), 1.5f + Random.Range(-0.3f, 0.3f), Random.Range(-0.05f, 0.05f));
-                m_Speed += Random.Range(30, 70.0f);
-                myVector = Vector3.Normalize(myVector);
-                rb.AddForce(myVector * m_Speed);
-                count = 1;
-                timer = 0;
-            }
-            if (Input.GetKeyDown(KeyCode.R))
+            if (mycondition[0]==3)
             {
                 rb.useGravity = true;
                 myVector = new Vector3(-0.6f, 1.5f, Random.Range(-0.2f, 0.2f));
@@ -66,11 +84,14 @@ public class NewBall : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > 0.8f)
             {
-                ballrend.enabled = false;
-                if (linerend != null)
+                if (mycondition[1] == 0)
                 {
-                    foreach (Renderer line in linerend)
-                        line.enabled = false;
+                    ballrend.enabled = false;
+                    if (linerend != null)
+                    {
+                        foreach (Renderer line in linerend)
+                            line.enabled = false;
+                    }
                 }
                 count = 2;
             }
@@ -87,9 +108,10 @@ public class NewBall : MonoBehaviour
                     foreach (Renderer line in linerend)
                         line.enabled = true;
                 }
-
+                count = 4;
             }
         }
+        
 
     }
     void OnCollisionEnter(Collision touch) //aaa為自定義碰撞事件
