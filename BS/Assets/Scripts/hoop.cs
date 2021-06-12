@@ -101,6 +101,7 @@ public class hoop : MonoBehaviour
 			{
 				triggerShake = produce_ball.condition[TrailCount][2];
 				triggerAudio = produce_ball.condition[TrailCount][3];
+				Debug.Log(triggerShake);
 			}
 			else
 			{

@@ -58,9 +58,10 @@ public class NewBall : MonoBehaviour
             if (mycondition[0]==2)//打鐵
             {
                 rb.useGravity = true;
-                myVector = new Vector3(-0.6f + Random.Range( 0, 0.2f), 1.5f + Random.Range(-0.3f, 0.3f), Random.Range(-0.035f, 0.035f));
+                float ZShift = (float)(((Random.Range(0, 2) == 1)) ? Random.Range(0.03f, 0.05f) : Random.Range(-0.05f, -0.03f));
+                myVector = new Vector3(-0.6f + Random.Range( 0, 0.2f), 1.5f + Random.Range(-0.3f, 0.3f), ZShift);
                 m_Speed = 2600.0f;
-                m_Speed += Random.Range(30, 50.0f);
+                //m_Speed += Random.Range(30, 50.0f);
                 myVector = Vector3.Normalize(myVector);
                 rb.AddForce(myVector * m_Speed);
                 count = 1;
@@ -70,7 +71,7 @@ public class NewBall : MonoBehaviour
             {
                 rb.useGravity = true;
                 myVector = new Vector3(-0.6f, 1.5f, Random.Range(-0.2f, 0.2f));
-                m_Speed = 950.0f;
+                m_Speed = 2200.0f;
 
                 myVector = Vector3.Normalize(myVector);
                 rb.AddForce(myVector * m_Speed);
