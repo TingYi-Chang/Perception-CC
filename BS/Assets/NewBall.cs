@@ -18,7 +18,7 @@ public class NewBall : MonoBehaviour
     //private int count;
     void Start()
     {
-        round = produce_ball.RoundCount;
+        round = produce_ball.RoundCount-1;
         if(round < produce_ball.condition.Count)
         {
             mycondition = produce_ball.condition[round];
@@ -61,7 +61,7 @@ public class NewBall : MonoBehaviour
                 float ZShift = (float)(((Random.Range(0, 2) == 1)) ? Random.Range(0.03f, 0.04f) : Random.Range(-0.04f, -0.03f));
                 myVector = new Vector3(-0.6f + Random.Range( -0.2f, 0.15f), 2.0f + Random.Range(-0.15f, 0.15f), ZShift);
                 m_Speed = 2600.0f;
-                //m_Speed += Random.Range(30, 50.0f);
+                m_Speed += Random.Range(10, 25.0f);
                 myVector = Vector3.Normalize(myVector);
                 rb.AddForce(myVector * m_Speed);
                 count = 1;
@@ -71,7 +71,7 @@ public class NewBall : MonoBehaviour
             {
                 rb.useGravity = true;
                 myVector = new Vector3(-0.6f, 2.0f, Random.Range(-0.2f, 0.2f));
-                m_Speed = 2300.0f;
+                m_Speed = 2450.0f;
 
                 myVector = Vector3.Normalize(myVector);
                 rb.AddForce(myVector * m_Speed);
