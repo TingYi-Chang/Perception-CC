@@ -51,7 +51,7 @@ public class BoxAdjust: MonoBehaviour
         Vector3 NewWorldPosition =
             myCam.ScreenToWorldPoint(ScreenPosition); //Screen point converted to world point
 
-        transform.position = new Vector3(NewWorldPosition.x , -10.7f , NewWorldPosition.z);
+        transform.position = new Vector3(NewWorldPosition.x , -11.5f , NewWorldPosition.z);
         GetComponent<Renderer>().material.color = Color.red;
         script.enabled = false;
     }

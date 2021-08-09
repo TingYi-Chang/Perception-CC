@@ -8,13 +8,17 @@ public class BallStop : MonoBehaviour
     public float StopSpeed, MoveSpeed;
     private Vector3 RestartPos;
     private int MoveFlag;
+    ManageViapoint script;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         RestartPos = transform.position;
         MoveFlag = 0;
-        
+        script = this.GetComponent<ManageViapoint>();
+        //ScriptName sn = thsi.GetComponent<ManageViapoint>()
+        //sn.DoSomething();
     }
 
     // Update is called once per frame
@@ -24,14 +28,24 @@ public class BallStop : MonoBehaviour
             MoveFlag = 1;
         if (rb.velocity.magnitude <= StopSpeed && MoveFlag == 1)
         {
-            transform.position = RestartPos;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-            rb.velocity = new Vector3(0,0,0);
-            rb.angularVelocity = new Vector3(0, 0, 0);
+            if(script.CheckCondition() == false) //not pass the game
+            {
+                transform.position = RestartPos;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                rb.velocity = new Vector3(0, 0, 0);
+                rb.angularVelocity = new Vector3(0, 0, 0);
+                MoveFlag = 0;
+            }
+            else // pass the game
+            {
+                //transform.position = RestartPos;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                rb.velocity = new Vector3(0, 0, 0);
+                rb.angularVelocity = new Vector3(0, 0, 0);
+                MoveFlag = 0;
+                Debug.Log("end of Game");
+            }
 
-            MoveFlag = 0;
         }
-
-
     }
 }
