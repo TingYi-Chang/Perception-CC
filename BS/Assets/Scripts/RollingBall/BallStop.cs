@@ -30,22 +30,30 @@ public class BallStop : MonoBehaviour
         {
             if(script.CheckCondition() == false) //not pass the game
             {
-                transform.position = RestartPos;
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                rb.velocity = new Vector3(0, 0, 0);
-                rb.angularVelocity = new Vector3(0, 0, 0);
-                MoveFlag = 0;
+                reset_ball();
             }
             else // pass the game
             {
                 //transform.position = RestartPos;
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                rb.velocity = new Vector3(0, 0, 0);
-                rb.angularVelocity = new Vector3(0, 0, 0);
-                MoveFlag = 0;
+                stop_ball();
                 Debug.Log("end of Game");
             }
 
         }
+    }
+    public void reset_ball()
+    {
+        transform.position = RestartPos;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        rb.velocity = new Vector3(0, 0, 0);
+        rb.angularVelocity = new Vector3(0, 0, 0);
+        MoveFlag = 0;
+    }
+    public void stop_ball()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        rb.velocity = new Vector3(0, 0, 0);
+        rb.angularVelocity = new Vector3(0, 0, 0);
+        MoveFlag = 0;
     }
 }

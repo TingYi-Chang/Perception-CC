@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ManageViapoint : MonoBehaviour
 {
-    public List<bool> TouchConditionList;
     public GameObject[] ViaPoints;
     public Material UntouchedMaterial;
     public Material TouchedMaterial;
@@ -29,7 +28,7 @@ public class ManageViapoint : MonoBehaviour
         
         for (int i = 0; i < ViaPoints.Length; i++)
         {
-            Debug.Log(i + " point = " + ViaPoints[i].GetComponent<MeshRenderer>().sharedMaterial);
+            //Debug.Log(i + " point = " + ViaPoints[i].GetComponent<MeshRenderer>().sharedMaterial);
             if (ViaPoints[i].GetComponent<MeshRenderer>().sharedMaterial == UntouchedMaterial)
             {
                 reset_color();
