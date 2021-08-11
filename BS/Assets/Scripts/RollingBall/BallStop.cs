@@ -8,6 +8,7 @@ public class BallStop : MonoBehaviour
     public float StopSpeed, MoveSpeed;
     private Vector3 RestartPos;
     private int MoveFlag;
+    public UnityEngine.UI.Image Myarrow;
     ManageViapoint script;
 
     // Start is called before the first frame update
@@ -43,6 +44,7 @@ public class BallStop : MonoBehaviour
     }
     public void reset_ball()
     {
+        Myarrow.enabled = true;
         transform.position = RestartPos;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         rb.velocity = new Vector3(0, 0, 0);

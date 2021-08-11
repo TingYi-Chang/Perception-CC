@@ -7,6 +7,7 @@ public class NontouchedPoint_Control : MonoBehaviour
     public GameObject Basketball;
     ManageViapoint script_point;
     BallStop script_ball;
+    public UnityEngine.UI.Image Myarrow;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,7 @@ public class NontouchedPoint_Control : MonoBehaviour
             print("碰到禁區"); //在除錯視窗中顯示OK
             script_ball.reset_ball();
             script_point.reset_color();
+            Myarrow.enabled = true;
         }
     }
 }

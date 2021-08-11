@@ -40,6 +40,7 @@ public class ball_start : MonoBehaviour
             float magnitude = Mathf.Sqrt(offset_x * offset_x + offset_y * offset_y);
             rb.AddForce(myVector * force_scale* magnitude);
         }
+        
 
 
     }
