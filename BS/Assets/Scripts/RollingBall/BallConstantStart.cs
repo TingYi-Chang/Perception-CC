@@ -12,6 +12,7 @@ public class BallConstantStart : MonoBehaviour
     public UnityEngine.UI.Image Myarrow, ArrPointer;
     Vector2 BallPos;
     RectTransform arrowRB, PointerRB;
+    ManageViapoint script;
 
     [HeaderAttribute("Parameter Setting")]
     public float Angle;
@@ -26,7 +27,7 @@ public class BallConstantStart : MonoBehaviour
         OriginPos = transform.position;
         arrowRB = Myarrow.GetComponent<RectTransform>();
         PointerRB = ArrPointer.GetComponent<RectTransform>();
-
+        script = this.GetComponent<ManageViapoint>();
         //canvas;
         Myarrow.enabled = true;
         ArrPointer.enabled = false;
@@ -58,6 +59,7 @@ public class BallConstantStart : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
+            script.reset_color();
             Myarrow.enabled = true;
             transform.position = OriginPos;
             transform.rotation = Quaternion.Euler(0, 0, 0);
