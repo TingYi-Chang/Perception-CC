@@ -17,7 +17,6 @@ public class BallConstantStart : MonoBehaviour
     [HeaderAttribute("Parameter Setting")]
     public float Angle;
     public float ForceScale;
-    public Vector3 TestAngularV;
     //Random rnd = new Random();
     //public Text text;
     //private int count;
@@ -48,7 +47,7 @@ public class BallConstantStart : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.magnitude <= 2)
         {
             Myarrow.enabled = false;
             rb.AddForce(myVector * ForceScale);
@@ -57,7 +56,7 @@ public class BallConstantStart : MonoBehaviour
             Debug.Log("球被射出 速度 : ");
 
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) )
         {
             script.reset_color();
             Myarrow.enabled = true;

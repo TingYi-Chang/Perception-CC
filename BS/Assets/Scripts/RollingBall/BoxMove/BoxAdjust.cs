@@ -5,9 +5,14 @@ using UnityEngine;
 public class BoxAdjust: MonoBehaviour
 {
     MouseLook script; //creates that script data type
-    public Vector3 mouseoffset;
-    public float myCoor_Z, myCoor_X;
     public Camera myCam;
+
+    [HeaderAttribute("Parameter Setting")]
+    public bool CanMove;
+    public bool CanRotate;
+    public bool dsetting;
+    public float Resolution;
+
     private float CameraZDistance;
     // Start is called before the first frame update
     void Start()
@@ -24,7 +29,9 @@ public class BoxAdjust: MonoBehaviour
             Debug.Log(name.ToString() + "我被點了一");
             script.enabled = false;
             GetComponent<Renderer>().material.color = Color.black;
-        }   
+        }
+        
+        
     }
     void OnMouseEnter()
     {
@@ -33,7 +40,17 @@ public class BoxAdjust: MonoBehaviour
     void OnMouseUp()
     {
         Debug.Log(name.ToString() + "我被點了一下");
-        script.enabled = true;
+        if (CanRotate)
+        {
+            script.enabled = true;
+        }
+        
+        if (dsetting && CanMove)//鎖點
+        {
+            transform.position = new Vector3(transform.position.x - transform.position.x % Resolution,
+                transform.position.y - transform.position.y % Resolution,
+                transform.position.z -transform.position.z % Resolution);
+        }
     }
     void OnMouseDown()
     {
@@ -46,13 +63,17 @@ public class BoxAdjust: MonoBehaviour
     }
     void OnMouseDrag()
     {
-        Vector3 ScreenPosition =
+        if (CanMove)
+        {
+            Vector3 ScreenPosition =
             new Vector3(Input.mousePosition.x, Input.mousePosition.y, CameraZDistance); //z axis added to screen point 
-        Vector3 NewWorldPosition =
-            myCam.ScreenToWorldPoint(ScreenPosition); //Screen point converted to world point
+            Vector3 NewWorldPosition =
+                myCam.ScreenToWorldPoint(ScreenPosition); //Screen point converted to world point
 
-        transform.position = new Vector3(NewWorldPosition.x , -11.5f , NewWorldPosition.z);
-        GetComponent<Renderer>().material.color = Color.red;
-        script.enabled = false;
+            transform.position = new Vector3(NewWorldPosition.x, -11.5f, NewWorldPosition.z);
+            GetComponent<Renderer>().material.color = Color.red;
+            script.enabled = false;
+        }
+        
     }
 }
