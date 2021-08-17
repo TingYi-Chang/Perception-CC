@@ -33,18 +33,20 @@ public class BallGravity : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.tag == "Basketball") //如果aaa碰撞事件的物件名稱是CubeA
+        if (col.gameObject.tag == "Basketball" || col.gameObject.tag == "Boxball") //如果aaa碰撞事件的物件名稱是CubeA
         {
-            rb = col.gameObject.GetComponent<Rigidbody>();
-            rb.AddForce(NormField * ForceScale);
-            Debug.Log(NormField);
-            Debug.Log("Angle" + YAngle);
-            Debug.Log(Mathf.Cos(YAngle / Mathf.Rad2Deg));
+            if (Gravity)
+            {
+                rb = col.gameObject.GetComponent<Rigidbody>();
+                rb.AddForce(NormField * ForceScale);
+                Debug.Log(NormField);
+            }
+                
         }
     }
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Basketball") //如果aaa碰撞事件的物件名稱是CubeA
+        if (col.gameObject.tag == "Basketball" || col.gameObject.tag == "Boxball") //如果aaa碰撞事件的物件名稱是CubeA
         {
             rb = col.gameObject.GetComponent<Rigidbody>();
             if (!Gravity)

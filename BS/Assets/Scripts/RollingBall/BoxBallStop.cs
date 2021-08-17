@@ -2,20 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallStop : MonoBehaviour
+public class BoxBallStop : MonoBehaviour
 {
+    private GameObject Basketball;
     private Rigidbody rb;
-    public float StopSpeed, MoveSpeed;
-    private Vector3 RestartPos,ParentPos;
+    private float Stopspeed, Movespeed;
+
+    private BallStop basketball_script;
+    private BallManage ballManage;
+
+    private Vector3 RestartPos, ParentPos;
     private int MoveFlag;
-    public UnityEngine.UI.Image Myarrow;
+
     bool StopFlag;
     float slowtime;
-    private BallManage ballManage;
 
     // Start is called before the first frame update
     void Start()
     {
+        Basketball = GameObject.Find("BasketBall");
+        basketball_script = Basketball.GetComponent<BallStop>();
+        Stopspeed = basketball_script.StopSpeed;
+        Movespeed = basketball_script.MoveSpeed;
+
         ballManage = GameObject.Find("Court").GetComponent<BallManage>();
 
         rb = GetComponent<Rigidbody>();
@@ -23,39 +32,32 @@ public class BallStop : MonoBehaviour
         MoveFlag = 0;
         StopFlag = false;
         slowtime = Time.time;
+
+        ParentPos = transform.parent.gameObject.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (rb.velocity.magnitude >= MoveSpeed && MoveFlag == 0)
+        if (rb.velocity.magnitude >= Movespeed && MoveFlag == 0)
         {
             MoveFlag = 1;
         }
         //重製stopflag 假的停
-        if (rb.velocity.magnitude >= MoveSpeed && StopFlag == true)
+        if (rb.velocity.magnitude >= Movespeed && StopFlag == true)
             StopFlag = false;
-            
-        if (rb.velocity.magnitude <= StopSpeed && MoveFlag == 1)
+
+        if (rb.velocity.magnitude <= Stopspeed && MoveFlag == 1)
         {
-            if ( StopFlag == false)//開始減速
-            {
-                slowtime = Time.time;
-                StopFlag = true;
-            }
-            else if (Time.time - slowtime > 1.0f)//真的停下來
-            {
-                StopFlag = false;
-                stop_ball();
-                ballManage.CheckAllBallStop();
-            }
+            StopFlag = false;
+            stop_ball();
+            ballManage.CheckAllBallStop();
         }
-        
+
     }
     public void reset_ball()
     {
-        Myarrow.enabled = true;
-        transform.position = RestartPos;
+        transform.position = RestartPos + transform.parent.gameObject.transform.position - ParentPos;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         rb.velocity = new Vector3(0, 0, 0);
         rb.angularVelocity = new Vector3(0, 0, 0);

@@ -37,7 +37,7 @@ public class CurveBall : MonoBehaviour
     }
     void OnTriggerExit(Collider col)
     {
-        if (col.gameObject.tag == "Basketball") //如果aaa碰撞事件的物件名稱是CubeA
+        if (col.gameObject.tag == "Basketball" || col.gameObject.tag == "Boxball") //如果aaa碰撞事件的物件名稱是CubeA
         {
             rb = col.gameObject.GetComponent<Rigidbody>();
             ActiveFlag = true;

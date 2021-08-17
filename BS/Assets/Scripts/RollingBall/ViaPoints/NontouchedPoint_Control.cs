@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class NontouchedPoint_Control : MonoBehaviour
 {
-    public GameObject Basketball;
+    private GameObject Basketball;
     ManageViapoint script_point;
+    private BallManage ballManage;
+    private BallStop script_ball;
 
-    public GameObject[] AllBalls;
-    public BallStop[] script_ball;
+    private GameObject[] AllBalls;
+    private BoxBallStop[] script_boxball;
     public UnityEngine.UI.Image Myarrow;
     // Start is called before the first frame update
     void Start()
     {
+        Basketball = GameObject.Find("BasketBall");
         script_point = Basketball.GetComponent<ManageViapoint>();
-
-        AllBalls = GameObject.FindGameObjectsWithTag("Basketball");
-        script_ball = new BallStop[AllBalls.Length];
+        ballManage = GameObject.Find("Court").GetComponent<BallManage>();
+        /*AllBalls = GameObject.FindGameObjectsWithTag("Boxball");
+        script_boxball = new BallStop[AllBalls.Length];
         Debug.Log("總共有" + AllBalls.Length + "顆球");
         for (int i = 0; i < AllBalls.Length; ++i)
         {
-            script_ball[i] = AllBalls[i].GetComponent<BallStop>();
-        }
-        
+            script_boxball[i] = AllBalls[i].GetComponent<BoxBallStop>();
+        }*/
+
     }
 
     // Update is called once per frame
@@ -32,14 +35,10 @@ public class NontouchedPoint_Control : MonoBehaviour
     }
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Basketball") //如果aaa碰撞事件的物件名稱是CubeA
+        if (col.gameObject.tag == "Basketball" || col.gameObject.tag == "Boxball") //如果aaa碰撞事件的物件名稱是CubeA
         {
             print("碰到禁區"); //在除錯視窗中顯示OK
-            for (int i = 0; i < AllBalls.Length; ++i)
-            {
-                script_ball[i].reset_ball();
-            }
-            //script_ball.reset_ball();
+            ballManage.ResetAllBall();
             script_point.reset_color();
             Myarrow.enabled = true;
         }
