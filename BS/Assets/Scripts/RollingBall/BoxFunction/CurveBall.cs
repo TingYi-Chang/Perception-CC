@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FixDirectionBox : MonoBehaviour
+public class CurveBall : MonoBehaviour
 {
-    GameObject Basketball;
     float YAngle;
-    private Rigidbody rb;
-    Vector3 NormVector;
-    float Mag;
 
     [HeaderAttribute("Parameter Setting")]
     public bool ChangeWithRotation;
     public Vector3 FieldDirection;
+    public float ForceScale;
+    public float LastingTime;
+
+    private Rigidbody rb;
+    private Vector3 NormVector;
+    bool ActiveFlag;
+    float activetime;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,14 +25,23 @@ public class FixDirectionBox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (ActiveFlag)
+        {
+            if (Time.time - activetime <= LastingTime)
+                rb.AddForce(NormVector * ForceScale);
+            else
+                ActiveFlag = false;
+        }
+
+
     }
-    void OnTriggerEnter(Collider col)
+    void OnTriggerExit(Collider col)
     {
         if (col.gameObject.tag == "Basketball") //如果aaa碰撞事件的物件名稱是CubeA
         {
             rb = col.gameObject.GetComponent<Rigidbody>();
-            Basketball = col.gameObject;
+            ActiveFlag = true;
+            activetime = Time.time;
             NormVector = FieldDirection.normalized;
             if (ChangeWithRotation)
             {
@@ -38,11 +50,7 @@ public class FixDirectionBox : MonoBehaviour
                     , FieldDirection.y, FieldDirection.x * Mathf.Sin(YAngle / Mathf.Rad2Deg) + FieldDirection.z * Mathf.Sin((YAngle + 90) / Mathf.Rad2Deg));
                 NormVector = NormVector.normalized;
             }
-            Mag = rb.velocity.magnitude;
-            Basketball.transform.position = new Vector3(transform.position.x, Basketball.transform.position.y, transform.position.z);
-            rb.velocity = NormVector * Mag;
-            Debug.Log("固定方向飛出");
-            
         }
     }
+
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BounceBack : MonoBehaviour
 {
-    public GameObject Basketball;
     private Rigidbody rb;
 
     [HeaderAttribute("Parameter Setting")]
@@ -13,7 +12,7 @@ public class BounceBack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = Basketball.GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
@@ -21,10 +20,11 @@ public class BounceBack : MonoBehaviour
     {
 
     }
-    void OnTriggerEnter(Collider coll)
+    void OnTriggerEnter(Collider col)
     {
-        if (coll.gameObject.name == "BasketBall") //如果aaa碰撞事件的物件名稱是CubeA
+        if (col.gameObject.tag == "Basketball") //如果aaa碰撞事件的物件名稱是CubeA
         {
+            rb = col.gameObject.GetComponent<Rigidbody>();
             rb.velocity = -1*rb.velocity;
             Debug.Log("回彈");
 

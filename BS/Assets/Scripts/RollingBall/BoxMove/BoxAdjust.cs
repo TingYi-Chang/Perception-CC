@@ -6,6 +6,7 @@ public class BoxAdjust: MonoBehaviour
 {
     MouseLook script; //creates that script data type
     public Camera myCam;
+    Color originalcolor;
 
     [HeaderAttribute("Parameter Setting")]
     public bool CanMove;
@@ -19,19 +20,20 @@ public class BoxAdjust: MonoBehaviour
     {
         script = this.GetComponent<MouseLook>();
         script.enabled = false;
+        originalcolor = GetComponent<Renderer>().material.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && script.enabled==true)
+        if (Input.GetMouseButtonDown(1) && script.enabled==true)
         {
-            Debug.Log(name.ToString() + "我被點了一");
+            Debug.Log(name.ToString() + "右鍵點");
             script.enabled = false;
-            GetComponent<Renderer>().material.color = Color.black;
+            GetComponent<Renderer>().material.color = originalcolor;
         }
         
-        
+
     }
     void OnMouseEnter()
     {
@@ -39,11 +41,7 @@ public class BoxAdjust: MonoBehaviour
     }
     void OnMouseUp()
     {
-        Debug.Log(name.ToString() + "我被點了一下");
-        if (CanRotate)
-        {
-            script.enabled = true;
-        }
+        Debug.Log(name.ToString() + "左鍵點一下");
         
         if (dsetting && CanMove)//鎖點
         {
@@ -59,7 +57,7 @@ public class BoxAdjust: MonoBehaviour
     void OnMouseExit()
     {
         if(script.enabled == false)
-            GetComponent<Renderer>().material.color = Color.black;
+            GetComponent<Renderer>().material.color = originalcolor;
     }
     void OnMouseDrag()
     {
@@ -72,8 +70,16 @@ public class BoxAdjust: MonoBehaviour
 
             transform.position = new Vector3(NewWorldPosition.x, -11.5f, NewWorldPosition.z);
             GetComponent<Renderer>().material.color = Color.red;
-            script.enabled = false;
         }
         
+    }
+    void OnMouseOver()
+    {
+        if (CanRotate && Input.GetMouseButtonUp(1) && script.enabled == false)
+        {
+            Debug.Log(name.ToString() + "右鍵點");
+            script.enabled = true;
+        }
+
     }
 }

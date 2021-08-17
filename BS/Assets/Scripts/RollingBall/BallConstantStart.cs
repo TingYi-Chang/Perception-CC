@@ -25,24 +25,25 @@ public class BallConstantStart : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         OriginPos = transform.position;
         arrowRB = Myarrow.GetComponent<RectTransform>();
-        PointerRB = ArrPointer.GetComponent<RectTransform>();
-        script = this.GetComponent<ManageViapoint>();
-        //canvas;
-        Myarrow.enabled = true;
-        ArrPointer.enabled = false;
+            PointerRB = ArrPointer.GetComponent<RectTransform>();
+            script = this.GetComponent<ManageViapoint>();
+            //canvas;
+            Myarrow.enabled = true;
+            ArrPointer.enabled = false;
 
-        //set rolling angle
-        myVector = new Vector3(Mathf.Cos(Angle / Mathf.Rad2Deg) , 0, Mathf.Sin(Angle / Mathf.Rad2Deg));
-        myVector = Vector3.Normalize(myVector);
-        //rb.AddForce(myVector * force_scale);
+            //set rolling angle
+            myVector = new Vector3(Mathf.Cos(Angle / Mathf.Rad2Deg), 0, Mathf.Sin(Angle / Mathf.Rad2Deg));
+            myVector = Vector3.Normalize(myVector);
+            //rb.AddForce(myVector * force_scale);
 
-        //set arrow
-        BallPos = myCam.WorldToScreenPoint(transform.position);
-        //float tilt_angle = Mathf.Atan2(offset_y, offset_x) * Mathf.Rad2Deg;
+            //set arrow
+            BallPos = myCam.WorldToScreenPoint(transform.position);
+            //float tilt_angle = Mathf.Atan2(offset_y, offset_x) * Mathf.Rad2Deg;
 
-        Myarrow.transform.position =  (new Vector3(BallPos.x - 75*Mathf.Cos(Angle / Mathf.Rad2Deg), BallPos.y - 75 * Mathf.Sin(Angle / Mathf.Rad2Deg), 0));
+            Myarrow.transform.position = (new Vector3(BallPos.x - 75 * Mathf.Cos(Angle / Mathf.Rad2Deg), BallPos.y - 75 * Mathf.Sin(Angle / Mathf.Rad2Deg), 0));
 
-        Myarrow.transform.rotation = Quaternion.Euler(0, 0, Angle);
+            Myarrow.transform.rotation = Quaternion.Euler(0, 0, Angle);
+        
 
     }
     void Update()
