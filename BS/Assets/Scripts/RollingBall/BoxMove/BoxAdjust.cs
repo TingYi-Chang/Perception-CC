@@ -13,6 +13,7 @@ public class BoxAdjust: MonoBehaviour
     public bool CanRotate;
     public bool dsetting;
     public float Resolution;
+    public float LastClickTime;
 
     private float CameraZDistance;
     // Start is called before the first frame update
@@ -28,9 +29,10 @@ public class BoxAdjust: MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && script.enabled==true)
         {
-            Debug.Log(name.ToString() + "右鍵點");
+            Debug.Log(name.ToString() + "結束旋轉");
             script.enabled = false;
             GetComponent<Renderer>().material.color = originalcolor;
+            LastClickTime = Time.time;
         }
         
 
@@ -75,9 +77,9 @@ public class BoxAdjust: MonoBehaviour
     }
     void OnMouseOver()
     {
-        if (CanRotate && Input.GetMouseButtonUp(1) && script.enabled == false)
+        if (CanRotate && Input.GetMouseButtonUp(1) && script.enabled == false && Time.time - LastClickTime > 0.1)
         {
-            Debug.Log(name.ToString() + "右鍵點");
+            Debug.Log(name.ToString() + "可旋轉");
             script.enabled = true;
         }
 
