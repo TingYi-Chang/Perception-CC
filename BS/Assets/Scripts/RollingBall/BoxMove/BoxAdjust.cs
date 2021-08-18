@@ -7,6 +7,9 @@ public class BoxAdjust: MonoBehaviour
     MouseLook script; //creates that script data type
     public Camera myCam;
     Color originalcolor;
+    public bool beenmoved;
+    private Vector3 OriginPos;
+    private float OriginAngle;
 
     [HeaderAttribute("Parameter Setting")]
     public bool CanMove;
@@ -15,6 +18,7 @@ public class BoxAdjust: MonoBehaviour
     public float Resolution;
     public float LastClickTime;
 
+
     private float CameraZDistance;
     // Start is called before the first frame update
     void Start()
@@ -22,6 +26,9 @@ public class BoxAdjust: MonoBehaviour
         script = this.GetComponent<MouseLook>();
         script.enabled = false;
         originalcolor = GetComponent<Renderer>().material.color;
+        beenmoved = false;
+        OriginPos = transform.position;
+        OriginAngle = transform.localRotation.eulerAngles.y;
     }
 
     // Update is called once per frame
@@ -34,7 +41,6 @@ public class BoxAdjust: MonoBehaviour
             GetComponent<Renderer>().material.color = originalcolor;
             LastClickTime = Time.time;
         }
-        
 
     }
     void OnMouseEnter()
@@ -72,6 +78,7 @@ public class BoxAdjust: MonoBehaviour
 
             transform.position = new Vector3(NewWorldPosition.x, -11.5f, NewWorldPosition.z);
             GetComponent<Renderer>().material.color = Color.red;
+            BeenMoved();
         }
         
     }
@@ -81,7 +88,20 @@ public class BoxAdjust: MonoBehaviour
         {
             Debug.Log(name.ToString() + "可旋轉");
             script.enabled = true;
+            BeenMoved();
         }
 
+    }
+    public void ResetPos()
+    {
+        transform.position = OriginPos ;
+        transform.rotation = Quaternion.Euler(0, OriginAngle , 0);
+    }
+    void BeenMoved()
+    {
+        if (!beenmoved)
+        {
+            beenmoved = true;
+        }
     }
 }

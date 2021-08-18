@@ -7,10 +7,7 @@ public class NontouchedPoint_Control : MonoBehaviour
     private GameObject Basketball;
     ManageViapoint script_point;
     private BallManage ballManage;
-    private BallStop script_ball;
 
-    private GameObject[] AllBalls;
-    private BoxBallStop[] script_boxball;
     public UnityEngine.UI.Image Myarrow;
     // Start is called before the first frame update
     void Start()
