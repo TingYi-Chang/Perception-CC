@@ -20,7 +20,7 @@ public class ViaPoint_ChangeColor : MonoBehaviour
     }
     void OnTriggerEnter(Collider col) 
     {
-        if (col.gameObject.tag == "Basketball") //如果aaa碰撞事件的物件名稱是CubeA
+        if (col.gameObject.tag == "Basketball" || col.gameObject.tag == "Boxball") //如果aaa碰撞事件的物件名稱是CubeA
         {
             print("碰到中繼點"); //在除錯視窗中顯示OK
             ChangeToTouchColor();

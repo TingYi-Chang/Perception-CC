@@ -16,6 +16,7 @@ public class CurveBall : MonoBehaviour
     private Vector3 NormVector;
     bool ActiveFlag;
     float activetime;
+    //private GameObject ball;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +32,11 @@ public class CurveBall : MonoBehaviour
                 rb.AddForce(NormVector * ForceScale);
             else
                 ActiveFlag = false;
+        }
+        if( rb!=null &&  rb.velocity.magnitude < 3.0f)
+        {//可能是重來或是按R
+            ActiveFlag = false;
+            rb.velocity = new Vector3(0, 0, 0);
         }
 
 
