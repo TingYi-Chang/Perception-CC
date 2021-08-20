@@ -13,6 +13,7 @@ public class FixDirectionBox : MonoBehaviour
     [HeaderAttribute("Parameter Setting")]
     public bool ChangeWithRotation;
     public Vector3 FieldDirection;
+    public bool SpeedUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +42,10 @@ public class FixDirectionBox : MonoBehaviour
             Mag = rb.velocity.magnitude;
             Basketball.transform.position = new Vector3(transform.position.x, Basketball.transform.position.y, transform.position.z);
             rb.velocity = NormVector * Mag;
+            if (SpeedUp)
+            {
+                rb.velocity *= 1.5f;
+            }
             Debug.Log("固定方向飛出");
             
         }
