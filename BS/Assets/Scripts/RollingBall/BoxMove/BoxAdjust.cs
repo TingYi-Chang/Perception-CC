@@ -10,6 +10,8 @@ public class BoxAdjust: MonoBehaviour
     public bool beenmoved;
     private Vector3 OriginPos;
     private float OriginAngle;
+    public int MovedTimes;
+    TestBoxPhase MovePhaseScript;
 
     [HeaderAttribute("Parameter Setting")]
     public bool CanMove;
@@ -29,6 +31,7 @@ public class BoxAdjust: MonoBehaviour
         beenmoved = false;
         OriginPos = transform.position;
         OriginAngle = transform.localRotation.eulerAngles.y;
+        MovePhaseScript = GameObject.Find("Court").GetComponent<TestBoxPhase>();
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ public class BoxAdjust: MonoBehaviour
             script.enabled = false;
             GetComponent<Renderer>().material.color = originalcolor;
             LastClickTime = Time.time;
+            MovePhaseScript.MovedTime += 1;
         }
 
     }
@@ -49,7 +53,7 @@ public class BoxAdjust: MonoBehaviour
     }
     void OnMouseUp()
     {
-        Debug.Log(name.ToString() + "左鍵點一下");
+        Debug.Log(name.ToString() + "左鍵起來");
         
         if (dsetting && CanMove)//鎖點
         {
@@ -57,6 +61,7 @@ public class BoxAdjust: MonoBehaviour
                 transform.position.y - transform.position.y % Resolution,
                 transform.position.z -transform.position.z % Resolution);
         }
+        MovePhaseScript.MovedTime += 1;
     }
     void OnMouseDown()
     {
