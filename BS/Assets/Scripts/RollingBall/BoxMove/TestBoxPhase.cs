@@ -13,6 +13,7 @@ public class TestBoxPhase : MonoBehaviour
 
 
     [HeaderAttribute("Parameter Setting")]
+    public bool HaveTestPhase;
     public int AvailbleTestTimes;
     public int AvailbleTryTimes;
     // Start is called before the first frame update
@@ -23,15 +24,20 @@ public class TestBoxPhase : MonoBehaviour
         ShowText = GameObject.Find("FrontText").GetComponent<Text>();
         MovedTime = 0;
         //先把點關掉
-        PointsChangeEnable(false);
-        pointsActive = false;
-        Debug.Log(MovedTime);
-
+        if (HaveTestPhase)
+        {
+            PointsChangeEnable(false);
+            pointsActive = false;
+            Debug.Log(MovedTime);
+        }
+        else
+            ShowText.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Return))
         {
             PointsChangeEnable(true);
