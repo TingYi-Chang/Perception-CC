@@ -7,12 +7,15 @@ public class BallConstantStart : MonoBehaviour
     // Start is called before the first frame update
     private Rigidbody rb;
     private Vector3 myVector,OriginPos;
+    private Collider BallCollider;
     
+
     public Camera myCam;
     public UnityEngine.UI.Image Myarrow, ArrPointer;
     Vector2 BallPos;
     RectTransform arrowRB, PointerRB;
     ManageViapoint script;
+    TestBoxPhase MovePhaseScript;
 
     [HeaderAttribute("Parameter Setting")]
     public float Angle;
@@ -20,6 +23,10 @@ public class BallConstantStart : MonoBehaviour
     //Random rnd = new Random();
     //public Text text;
     //private int count;
+    private Collider[] BoxBallColliders;
+    public GameObject[] AllBoxBalls;
+    public Rigidbody[] boxball_rb;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -43,19 +50,34 @@ public class BallConstantStart : MonoBehaviour
             Myarrow.transform.position = (new Vector3(BallPos.x - 75 * Mathf.Cos(Angle / Mathf.Rad2Deg), BallPos.y - 75 * Mathf.Sin(Angle / Mathf.Rad2Deg), 0));
 
             Myarrow.transform.rotation = Quaternion.Euler(0, 0, Angle);
-        
+        //test phase
+        MovePhaseScript = GameObject.Find("Court").GetComponent<TestBoxPhase>();
+
+        //prevent the bug before shooting the ball
+        BallCollider = GameObject.Find("BasketBall").GetComponent<Collider>();
+
+        AllBoxBalls = GameObject.FindGameObjectsWithTag("Boxball");
+        boxball_rb = new Rigidbody[AllBoxBalls.Length];
+        BoxBallColliders = new Collider[AllBoxBalls.Length];
+        for (int i = 0 ; i < boxball_rb.Length; ++i)
+        {
+            boxball_rb[i] = AllBoxBalls[i].GetComponent<Rigidbody>();
+            BoxBallColliders[i] = AllBoxBalls[i].GetComponent<Collider>();
+        }
+        ChangeBallColliderEnable(false);
+        //BallCollider.attachedRigidbody.useGravity = false;
 
     }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.magnitude <= 2)
         {
+            ChangeBallColliderEnable(true);
             Myarrow.enabled = false;
             rb.AddForce(myVector * ForceScale);
-            //rb.angularVelocity = TestAngularV;
-            //rb.AddTorque(TestAngularV);
             Debug.Log("球被射出 速度 : ");
-
+            MovePhaseScript.MovedTime += 1;
+            
         }
         if (Input.GetKeyDown(KeyCode.R) )
         {
@@ -65,8 +87,20 @@ public class BallConstantStart : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 0);
             rb.velocity = new Vector3(0, 0, 0);
             rb.angularVelocity = new Vector3(0, 0, 0);
+            ChangeBallColliderEnable(false);
         }
 
 
     }
+    public void ChangeBallColliderEnable(bool towhat)
+    {
+        BallCollider.enabled = towhat;
+        rb.useGravity = towhat;
+        for (int i = 0; i < boxball_rb.Length; ++i)
+        {
+            boxball_rb[i].useGravity = towhat;
+            BoxBallColliders[i].enabled = towhat;
+        }
+    }
+    
 }

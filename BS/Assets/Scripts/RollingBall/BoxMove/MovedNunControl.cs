@@ -9,6 +9,7 @@ public class MovedNunControl : MonoBehaviour
     private bool Locked;
     BallManage ballManage;
     ManageViapoint viapointManage;
+    private bool[] movecondition,rotatecondition;
 
     [HeaderAttribute("Parameter Setting")]
     public int BoxesAbleToMove;
@@ -17,9 +18,13 @@ public class MovedNunControl : MonoBehaviour
     {
         Boxs = GameObject.FindGameObjectsWithTag("Box");
         BoxScripts = new BoxAdjust[Boxs.Length];
+        movecondition = new bool[Boxs.Length];
+        rotatecondition = new bool[Boxs.Length];
         for (int i = 0; i < Boxs.Length; i++)
         {
             BoxScripts[i] = Boxs[i].GetComponent<BoxAdjust>();
+            movecondition[i] = BoxScripts[i].CanMove;
+            rotatecondition[i] = BoxScripts[i].CanRotate;
         }
         Locked = false;
         ballManage = GameObject.Find("Court").GetComponent<BallManage>();
@@ -69,8 +74,8 @@ public class MovedNunControl : MonoBehaviour
     {
         for (int i = 0; i < Boxs.Length; i++)
         {
-            BoxScripts[i].CanMove = true;
-            BoxScripts[i].CanRotate = true;
+            BoxScripts[i].CanMove = movecondition[i];
+            BoxScripts[i].CanRotate = rotatecondition[i];
             BoxScripts[i].beenmoved = false;
             BoxScripts[i].ResetPos();
         }

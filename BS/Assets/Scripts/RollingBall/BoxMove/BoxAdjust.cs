@@ -43,7 +43,7 @@ public class BoxAdjust: MonoBehaviour
             script.enabled = false;
             GetComponent<Renderer>().material.color = originalcolor;
             LastClickTime = Time.time;
-            MovePhaseScript.MovedTime += 1;
+            //MovePhaseScript.MovedTime += 1;
         }
 
     }
@@ -61,7 +61,7 @@ public class BoxAdjust: MonoBehaviour
                 transform.position.y - transform.position.y % Resolution,
                 transform.position.z -transform.position.z % Resolution);
         }
-        MovePhaseScript.MovedTime += 1;
+        //MovePhaseScript.MovedTime += 1;
     }
     void OnMouseDown()
     {

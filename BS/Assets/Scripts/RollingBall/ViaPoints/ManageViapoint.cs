@@ -7,6 +7,7 @@ public class ManageViapoint : MonoBehaviour
     public GameObject[] ViaPoints;
     public Material UntouchedMaterial;
     public Material TouchedMaterial;
+    private BallConstantStart ballstart_script;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class ManageViapoint : MonoBehaviour
         ViaPoints = GameObject.FindGameObjectsWithTag("ViaPoint");
 
         Debug.Log("總共有" + ViaPoints.Length + "個中繼點");
-
+        ballstart_script = GameObject.Find("BasketBall").GetComponent<BallConstantStart>();
     }
 
     // Update is called once per frame
@@ -45,6 +46,8 @@ public class ManageViapoint : MonoBehaviour
         {
             ViaPoints[i].GetComponent<MeshRenderer>().material = UntouchedMaterial;
         }
-        
+        ballstart_script.ChangeBallColliderEnable(false);
+
+
     }
 }
