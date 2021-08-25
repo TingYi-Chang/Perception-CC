@@ -10,6 +10,7 @@ public class MovedNunControl : MonoBehaviour
     BallManage ballManage;
     ManageViapoint viapointManage;
     private bool[] movecondition,rotatecondition;
+    private MySceneManager script_scenemanager;
 
     [HeaderAttribute("Parameter Setting")]
     public int BoxesAbleToMove;
@@ -30,18 +31,29 @@ public class MovedNunControl : MonoBehaviour
         ballManage = GameObject.Find("Court").GetComponent<BallManage>();
         viapointManage = GameObject.Find("BasketBall").GetComponent<ManageViapoint>();
 
+        script_scenemanager = GameObject.Find("MySceneManager").GetComponent<MySceneManager>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Checkboxes();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ResetAllBoxes();
-            ballManage.ResetAllBall();
-            viapointManage.reset_color();
+            if (!script_scenemanager.PassGame)
+            {
+                ResetAllBoxes();
+                ballManage.ResetAllBall();
+                viapointManage.reset_color();
+            }
+            else//finish the game 
+            {
+                viapointManage.CloseMenu();
+            }
+                
         }
+        
+
     }
     public void Checkboxes()
     {

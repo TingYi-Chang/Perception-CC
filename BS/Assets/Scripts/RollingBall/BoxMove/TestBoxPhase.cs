@@ -11,7 +11,7 @@ public class TestBoxPhase : MonoBehaviour
     private bool pointsActive;
     public int MovedTime;
     private int RemainMin, RemainSec, RemainingTime;
-
+    private MySceneManager script_scenemanager;
 
 
 
@@ -42,37 +42,64 @@ public class TestBoxPhase : MonoBehaviour
         }
         InvokeRepeating("timer", 1, 1);
 
+        script_scenemanager = GameObject.Find("MySceneManager").GetComponent<MySceneManager>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (!script_scenemanager.PassGame)
         {
-            PointsChangeEnable(true);
-            //ShowText.enabled = false;
-            MovedTime = 0;
-            RemainingTime = PlayingTime;
+            if (Input.GetKeyDown(KeyCode.Return) && HaveTestPhase && pointsActive==false)//pass test phase
+            {
+                PointsChangeEnable(true);
+                //ShowText.enabled = false;
+                MovedTime = 0;
+                RemainingTime = PlayingTime;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Return))//to next scene
+            {
+                
+                script_scenemanager.LoadNextScene();
+            }
         }
         //次數顯示和若超過次數...測試
-        if (pointsActive == false && AvailbleTestTimes > MovedTime)
+        
+        if (pointsActive == false )
         {
-            if(RemainingTime % 60>=10)
-                ShowText.text = "Available test times : " + (AvailbleTestTimes - MovedTime) + "\n" + "Remaining Time " + RemainingTime / 60 + ":" + RemainingTime % 60;
-            else
-                ShowText.text = "Available test times : " + (AvailbleTestTimes - MovedTime) + "\n" + "Remaining Time " + RemainingTime / 60 + ":0" + RemainingTime % 60;
+            if(AvailbleTestTimes > MovedTime)
+            {
+                if (RemainingTime % 60 >= 10)
+                    ShowText.text = "Available test times : " + (AvailbleTestTimes - MovedTime) + "\n" + "Remaining Time " + RemainingTime / 60 + ":" + RemainingTime % 60;
+                else
+                    ShowText.text = "Available test times : " + (AvailbleTestTimes - MovedTime) + "\n" + "Remaining Time " + RemainingTime / 60 + ":0" + RemainingTime % 60;
+            }
+            else if ( AvailbleTestTimes <= MovedTime)
+            {
+                PointsChangeEnable(true);
+                //ShowText.enabled = false;
+                MovedTime = 0;
+                RemainingTime = PlayingTime;
+            }
+            if(RemainingTime <=0)
+            {
+                PointsChangeEnable(true);
+                MovedTime = 0;
+                RemainingTime = PlayingTime;
+            }
         }
-        else if (pointsActive == false && AvailbleTestTimes <= MovedTime)
-        {
-            PointsChangeEnable(true);
-            //ShowText.enabled = false;
-            MovedTime = 0;
-            RemainingTime = PlayingTime;
-        }
+        
         //遊玩階段
         if (pointsActive == true)
         {
+            if (RemainingTime <= 0)
+            {
+
+            }
             if (RemainingTime % 60 >= 10)
                 ShowText.text = "Remaining Time " + RemainingTime / 60 + ":" + RemainingTime % 60;
             else
@@ -96,7 +123,7 @@ public class TestBoxPhase : MonoBehaviour
     {    //自訂一個函式叫做timer。
 
         RemainingTime -= 1;
-        if (RemainingTime == 0)
+        if (RemainingTime < 0)
         {
             CancelInvoke("timer");
             ShowText.text = "Times UP";

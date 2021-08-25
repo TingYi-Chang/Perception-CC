@@ -39,7 +39,7 @@ public class BallGravity : MonoBehaviour
             {
                 rb = col.gameObject.GetComponent<Rigidbody>();
                 rb.AddForce(NormField * ForceScale);
-                Debug.Log(NormField);
+                //Debug.Log(NormField);
             }
                 
         }

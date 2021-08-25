@@ -8,13 +8,13 @@ public class BallConstantStart : MonoBehaviour
     private Rigidbody rb;
     private Vector3 myVector,OriginPos;
     private Collider BallCollider;
-    
+    private MySceneManager script_scenemanager;
 
     public Camera myCam;
     public UnityEngine.UI.Image Myarrow, ArrPointer;
     Vector2 BallPos;
     RectTransform arrowRB, PointerRB;
-    ManageViapoint script;
+    ManageViapoint script_viapoints;
     TestBoxPhase MovePhaseScript;
 
     [HeaderAttribute("Parameter Setting")]
@@ -33,7 +33,7 @@ public class BallConstantStart : MonoBehaviour
         OriginPos = transform.position;
         arrowRB = Myarrow.GetComponent<RectTransform>();
             PointerRB = ArrPointer.GetComponent<RectTransform>();
-            script = this.GetComponent<ManageViapoint>();
+            script_viapoints = this.GetComponent<ManageViapoint>();
             //canvas;
             Myarrow.enabled = true;
             ArrPointer.enabled = false;
@@ -65,7 +65,9 @@ public class BallConstantStart : MonoBehaviour
             BoxBallColliders[i] = AllBoxBalls[i].GetComponent<Collider>();
         }
         ChangeBallColliderEnable(false);
-        //BallCollider.attachedRigidbody.useGravity = false;
+
+        //Scene manager
+        script_scenemanager = GameObject.Find("MySceneManager").GetComponent<MySceneManager>();
 
     }
     void Update()
@@ -79,15 +81,18 @@ public class BallConstantStart : MonoBehaviour
             MovePhaseScript.MovedTime += 1;
             
         }
-        if (Input.GetKeyDown(KeyCode.R) )
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            script.reset_color();
+            script_viapoints.reset_color();
             Myarrow.enabled = true;
             transform.position = OriginPos;
             transform.rotation = Quaternion.Euler(0, 0, 0);
             rb.velocity = new Vector3(0, 0, 0);
             rb.angularVelocity = new Vector3(0, 0, 0);
             ChangeBallColliderEnable(false);
+            script_scenemanager.PassGame = false;
+            Time.timeScale = 1.0f;
+            script_viapoints.CloseMenu();
         }
 
 

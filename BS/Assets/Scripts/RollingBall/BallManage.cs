@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BallManage : MonoBehaviour
-{
+{//Script On Court
     private GameObject Basketball;
     ManageViapoint script_point;
     private BallStop script_ball;
@@ -52,6 +52,7 @@ public class BallManage : MonoBehaviour
         if (!script_point.CheckCondition())//失敗
         {
             ResetAllBall();
+            script_point.reset_color();
             Debug.Log("失敗重來");
         }
         else//成功
@@ -59,7 +60,7 @@ public class BallManage : MonoBehaviour
             //**************
             //add pass scene here
             //**************
-            ResetAllBall();
+            //ResetAllBall();
         }
     }
     public void ResetAllBall()

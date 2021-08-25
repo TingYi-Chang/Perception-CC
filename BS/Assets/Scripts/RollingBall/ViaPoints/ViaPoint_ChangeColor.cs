@@ -7,10 +7,11 @@ public class ViaPoint_ChangeColor : MonoBehaviour
     public Material UntouchedMaterial;
     public Material TouchedMaterial;
     static public bool TouchCondition;
+    ManageViapoint Script_manage_point;
     // Start is called before the first frame update
     void Start()
     {
-
+        Script_manage_point = GameObject.Find("BasketBall").GetComponent<ManageViapoint>();
     }
 
     // Update is called once per frame
@@ -29,6 +30,7 @@ public class ViaPoint_ChangeColor : MonoBehaviour
     public void ChangeToTouchColor()
     {
         this.GetComponent<MeshRenderer>().material = TouchedMaterial;
+        Script_manage_point.CheckCondition();
     }
     public void ChangeToUntouchColor()
     {

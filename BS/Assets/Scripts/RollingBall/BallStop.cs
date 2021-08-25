@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BallStop : MonoBehaviour
-{
+{//Script on BasketBall
     private Rigidbody rb;
     public float StopSpeed, MoveSpeed;
     private Vector3 RestartPos,ParentPos;
@@ -12,11 +12,13 @@ public class BallStop : MonoBehaviour
     bool StopFlag;
     float slowtime;
     private BallManage ballManage;
+    private BallConstantStart script_ballstart;
 
     // Start is called before the first frame update
     void Start()
     {
         ballManage = GameObject.Find("Court").GetComponent<BallManage>();
+        script_ballstart = GameObject.Find("BasketBall").GetComponent<BallConstantStart>();
 
         rb = GetComponent<Rigidbody>();
         RestartPos = transform.position;
@@ -60,6 +62,7 @@ public class BallStop : MonoBehaviour
         rb.velocity = new Vector3(0, 0, 0);
         rb.angularVelocity = new Vector3(0, 0, 0);
         MoveFlag = 0;
+        //script_ballstart.ChangeBallColliderEnable(false);
     }
     public void stop_ball()
     {

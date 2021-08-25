@@ -12,6 +12,7 @@ public class BoxAdjust: MonoBehaviour
     private float OriginAngle;
     public int MovedTimes;
     TestBoxPhase MovePhaseScript;
+    MovedNunControl scrip_move;
 
     [HeaderAttribute("Parameter Setting")]
     public bool CanMove;
@@ -32,6 +33,7 @@ public class BoxAdjust: MonoBehaviour
         OriginPos = transform.position;
         OriginAngle = transform.localRotation.eulerAngles.y;
         MovePhaseScript = GameObject.Find("Court").GetComponent<TestBoxPhase>();
+        scrip_move = GameObject.Find("BasketBall").GetComponent<MovedNunControl>();
     }
 
     // Update is called once per frame
@@ -44,6 +46,7 @@ public class BoxAdjust: MonoBehaviour
             GetComponent<Renderer>().material.color = originalcolor;
             LastClickTime = Time.time;
             //MovePhaseScript.MovedTime += 1;
+            scrip_move.Checkboxes();
         }
 
     }
@@ -61,6 +64,7 @@ public class BoxAdjust: MonoBehaviour
                 transform.position.y - transform.position.y % Resolution,
                 transform.position.z -transform.position.z % Resolution);
         }
+        scrip_move.Checkboxes();
         //MovePhaseScript.MovedTime += 1;
     }
     void OnMouseDown()
