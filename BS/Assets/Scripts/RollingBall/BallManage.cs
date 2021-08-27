@@ -48,20 +48,12 @@ public class BallManage : MonoBehaviour
             if (all_rb[i].velocity.magnitude > 4.0f)
                 return;
         }
-        //都停下來的話 就檢查結束沒
-        if (!script_point.CheckCondition())//失敗
-        {
-            ResetAllBall();
-            script_point.reset_color();
-            Debug.Log("失敗重來");
-        }
-        else//成功
-        {
-            //**************
-            //add pass scene here
-            //**************
-            //ResetAllBall();
-        }
+
+        //都停下來的話 就重製
+        ResetAllBall();
+        script_point.reset_color();
+        Debug.Log("失敗重來");
+
     }
     public void ResetAllBall()
     {

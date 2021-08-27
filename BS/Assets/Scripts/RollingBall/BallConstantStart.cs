@@ -24,8 +24,8 @@ public class BallConstantStart : MonoBehaviour
     //public Text text;
     //private int count;
     private Collider[] BoxBallColliders;
-    public GameObject[] AllBoxBalls;
-    public Rigidbody[] boxball_rb;
+    private GameObject[] AllBoxBalls;
+    private Rigidbody[] boxball_rb;
 
     void Start()
     {

@@ -7,7 +7,7 @@ public class BallStop : MonoBehaviour
     private Rigidbody rb;
     public float StopSpeed, MoveSpeed;
     private Vector3 RestartPos,ParentPos;
-    private int MoveFlag;
+    public int MoveFlag;
     public UnityEngine.UI.Image Myarrow;
     bool StopFlag;
     float slowtime;
