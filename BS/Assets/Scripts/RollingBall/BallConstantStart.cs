@@ -47,7 +47,7 @@ public class BallConstantStart : MonoBehaviour
             BallPos = myCam.WorldToScreenPoint(transform.position);
             //float tilt_angle = Mathf.Atan2(offset_y, offset_x) * Mathf.Rad2Deg;
 
-            Myarrow.transform.position = (new Vector3(BallPos.x - 75 * Mathf.Cos(Angle / Mathf.Rad2Deg), BallPos.y - 75 * Mathf.Sin(Angle / Mathf.Rad2Deg), 0));
+            Myarrow.transform.position = (new Vector3(BallPos.x - 60 * Mathf.Cos(Angle / Mathf.Rad2Deg), BallPos.y - 60 * Mathf.Sin(Angle / Mathf.Rad2Deg), 0));
 
             Myarrow.transform.rotation = Quaternion.Euler(0, 0, Angle);
         //test phase

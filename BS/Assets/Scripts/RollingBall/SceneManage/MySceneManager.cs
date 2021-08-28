@@ -7,7 +7,11 @@ public class MySceneManager : MonoBehaviour
 {
     public bool PassGame;
     public bool HaveTsetPhase;
-    public int Sequence1, Sequence2, Sequence3;
+
+    [HeaderAttribute("Fill 1~3")]
+    public int Sequence1;
+    public int Sequence2, Sequence3;
+
     /*void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -27,7 +31,12 @@ public class MySceneManager : MonoBehaviour
         else if (SceneManager.GetActiveScene().buildIndex == 7)//如果是從tutorail white 開始
         {
             Debug.Log("從white box 教學開始");
-
+            OrderWhiteScenes();
+        }
+        else if (SceneManager.GetActiveScene().buildIndex == 11)//如果是從demo 開始 ->3關
+        {
+            Debug.Log("從demo scene開始");
+            OrderBlackScenes(false);
         }
         else if(GameData.SceneCount == 0)//如果是開始的scene 避免不是從tutorial 開始
         {
@@ -58,53 +67,27 @@ public class MySceneManager : MonoBehaviour
       //8~10 play white
         if (HaveSixGame)
         {
-            for (int i = 0; i < GameData.SceneOrder.Length; i++)//不會跳到下一關
-            {
-                GameData.SceneOrder[i] = i + 1;
-            }
+            GameData.SceneOrder[0] = Sequence1; GameData.SceneOrder[1] = Sequence1+3;
+            GameData.SceneOrder[2] = Sequence2; GameData.SceneOrder[3] = Sequence2 + 3;
+            GameData.SceneOrder[4] = Sequence3; GameData.SceneOrder[5] = Sequence3 + 3;
         }
         else
         {
-            for (int i = 0; i < GameData.SceneOrder.Length/2; i++)//不會跳到下一關
-            {
-                GameData.SceneOrder[i] = i + 4;
-                GameData.SceneOrder[i+3] = i + 4;
-            }
-        }
-        //shuffle
-        for (int i = 0; i < GameData.SceneOrder.Length / 2; i++)//0~2
-        {
-            int temp = GameData.SceneOrder[i];
-            int randomIndex = Random.Range(0, GameData.SceneOrder.Length / 2);
-            GameData.SceneOrder[i] = GameData.SceneOrder[randomIndex];
-            GameData.SceneOrder[randomIndex] = temp;
-            //last three scene would be the order as first three
-            temp = GameData.SceneOrder[i+3];
-            randomIndex += 3;
-            GameData.SceneOrder[i+3] = GameData.SceneOrder[randomIndex];
-            GameData.SceneOrder[randomIndex] = temp;
+            GameData.SceneOrder[0] = Sequence1+3; GameData.SceneOrder[3] = Sequence1 + 3;
+            GameData.SceneOrder[1] = Sequence2+3; GameData.SceneOrder[4] = Sequence2 + 3;
+            GameData.SceneOrder[2] = Sequence3+3; GameData.SceneOrder[5] = Sequence3 + 3;
         }
         
     }
-    void OrderWhiteScenes(bool HaveSixGame)
+    void OrderWhiteScenes()
     { // 0-->tutoria black 
       //1~3 test black 
       //4~6 play black
       //7 -->tutorial white
       //8~10 play white
-        for (int i = 0; i < GameData.SceneOrder.Length; i++)//不會跳到下一關
-        {
-            GameData.SceneOrder[i] = i + 8;
-            GameData.SceneOrder[i+3] = i + 8;
-        }
-        //shuffle
-        for (int i = 0; i < GameData.SceneOrder.Length / 2; i++)//0~2
-        {
-            int temp = GameData.SceneOrder[i];
-            int randomIndex = Random.Range(0, GameData.SceneOrder.Length / 2);
-            GameData.SceneOrder[i] = GameData.SceneOrder[randomIndex];
-            GameData.SceneOrder[randomIndex] = temp;
-        }
+        GameData.SceneOrder[0] = Sequence1 + 7; GameData.SceneOrder[3] = Sequence1 + 7;
+        GameData.SceneOrder[1] = Sequence2 + 7; GameData.SceneOrder[4] = Sequence2 + 7;
+        GameData.SceneOrder[2] = Sequence3 + 7; GameData.SceneOrder[5] = Sequence3 + 7;
 
     }
     public void LoadNextScene()
